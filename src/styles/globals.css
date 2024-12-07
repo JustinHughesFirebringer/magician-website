@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --color-primary: 89, 0, 255;      /* Deep Purple */
+  --color-secondary: 255, 71, 163;  /* Bright Pink */
+  --color-accent: 255, 214, 0;      /* Golden Yellow */
+  
+  /* Background Colors */
+  --color-bg-primary: 13, 13, 37;   /* Deep Navy */
+  --color-bg-secondary: 25, 25, 58; /* Lighter Navy */
+  
+  /* Text Colors */
+  --color-text-primary: 255, 255, 255;
+  --color-text-secondary: 199, 199, 255;
+}
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-[#0D0D25] to-[#19193A];
+    color: rgb(var(--color-text-primary));
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+}

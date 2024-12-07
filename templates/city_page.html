@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ meta_title }}</title>
+    <meta name="description" content="{{ meta_description }}">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Magicians in {{ city.name }}, {{ city.state }}",
+        "description": "Professional magicians and illusionists in {{ city.name }}, {{ city.state }}",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "{{ city.name }}",
+            "addressRegion": "{{ city.state }}",
+            "addressCountry": "US"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "{{ city.coordinates.latitude }}",
+            "longitude": "{{ city.coordinates.longitude }}"
+        }
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Magicians in {{ city.name }}, {{ city.state }}</h1>
+        <p>Find and book the best magicians for your events in {{ city.name }}</p>
+    </header>
+
+    <main>
+        <section class="magicians-list">
+            {% for magician in magicians %}
+            <article class="magician-card">
+                <h2>{{ magician.name }}</h2>
+                <div class="magician-details">
+                    <p class="specialties">
+                        <strong>Specialties:</strong>
+                        {{ magician.specialties|join(", ") }}
+                    </p>
+                    <p class="experience">
+                        <strong>Experience:</strong>
+                        {{ magician.experience_years }} years
+                    </p>
+                    <p class="rating">
+                        <strong>Rating:</strong>
+                        {{ magician.rating }}/5 ({{ magician.reviews_count }} reviews)
+                    </p>
+                </div>
+                <div class="contact-info">
+                    <a href="{{ magician.contact.website }}" class="website-link">Visit Website</a>
+                    <a href="tel:{{ magician.contact.phone }}" class="phone-link">Call Now</a>
+                </div>
+            </article>
+            {% endfor %}
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Magician Directory. All rights reserved.</p>
+    </footer>
+</body>
+</html>

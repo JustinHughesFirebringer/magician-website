@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Original Magic Theme Colors */
+    --color-primary: 89, 0, 255;      /* Deep Purple */
+    --color-secondary: 255, 71, 163;  /* Bright Pink */
+    --color-accent: 255, 214, 0;      /* Golden Yellow */
+    --color-bg-primary: 13, 13, 37;   /* Deep Navy */
+    --color-bg-secondary: 25, 25, 58; /* Lighter Navy */
+    --color-text-primary: 255, 255, 255;
+    --color-text-secondary: 199, 199, 255;
+
+    /* shadcn/ui Variables - Themed for Magic */
+    --background: 231 15% 10%;
+    --foreground: 210 40% 98%;
+    --card: 231 15% 12%;
+    --card-foreground: 210 40% 98%;
+    --popover: 231 15% 12%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 263 100% 50%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 328 100% 64%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 231 15% 20%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 48 100% 50%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 231 15% 25%;
+    --input: 231 15% 25%;
+    --ring: 263 100% 50%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 231 15% 10%;
+    --foreground: 210 40% 98%;
+    --card: 231 15% 12%;
+    --card-foreground: 210 40% 98%;
+    --popover: 231 15% 12%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 263 100% 50%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 328 100% 64%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 231 15% 20%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 48 100% 50%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 231 15% 25%;
+    --input: 231 15% 25%;
+    --ring: 263 100% 50%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-gradient-to-br from-[#0D0D25] to-[#19193A];
+    color: rgb(var(--color-text-primary));
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+}
+
+@layer components {
+  .magic-card {
+    @apply relative overflow-hidden rounded-xl bg-white/10 backdrop-blur-md 
+           border border-white/20 shadow-lg hover:shadow-xl 
+           transition-all duration-300 ease-out
+           hover:scale-[1.02] hover:border-white/30;
+  }
+
+  .magic-button {
+    @apply px-6 py-3 rounded-full font-medium
+           bg-gradient-to-r from-[#5900FF] to-[#FF47A3]
+           hover:from-[#6F1FFF] hover:to-[#FF5FB0]
+           text-white shadow-lg hover:shadow-xl
+           transition-all duration-300 ease-out
+           hover:scale-[1.02]
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .magic-input {
+    @apply w-full px-4 py-2 rounded-lg
+           bg-white/10 backdrop-blur-md
+           border border-white/20
+           focus:border-white/40 focus:outline-none
+           text-white placeholder-white/50
+           transition-all duration-300;
+  }
+
+  .magic-select {
+    @apply magic-input appearance-none bg-no-repeat bg-[length:16px_16px] bg-[right_1rem_center];
+  }
+
+  .magic-badge {
+    @apply px-3 py-1 rounded-full text-sm font-medium
+           bg-gradient-to-r from-[#5900FF]/20 to-[#FF47A3]/20
+           border border-white/10
+           text-white;
+  }
+
+  .magic-container {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8 py-8;
+  }
+}
+
+/* Decorative Elements */
+.magic-sparkle {
+  @apply absolute w-1 h-1 rounded-full bg-white/50 animate-twinkle;
+}
+
+.magic-glow {
+  @apply absolute blur-[100px] rounded-full 
+         bg-gradient-to-r from-[#5900FF]/20 to-[#FF47A3]/20
+         w-[200px] h-[200px] -z-10;
+}
+
+/* Custom Animations */
+@keyframes twinkle {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.animate-twinkle {
+  animation: twinkle 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Responsive Design Helpers */
+@media (max-width: 640px) {
+  .magic-container {
+    @apply px-4 py-6;
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-[#0D0D25];
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-b from-[#5900FF] to-[#FF47A3] rounded-full;
+}

@@ -1,0 +1,40 @@
+[
+  {
+    "name": "David Wonder",
+    "businessName": "Wonder Magic Shows",
+    "location": {
+      "city": "Los Angeles",
+      "state": "CA"
+    },
+    "website": "https://www.wondermagic.com",
+    "phone": "(555) 123-4567",
+    "email": "david@wondermagic.com",
+    "source": "Sample Data",
+    "sourceUrl": "manual",
+    "description": "Professional magician specializing in corporate events and private parties",
+    "services": [
+      "Close-up Magic",
+      "Stage Shows",
+      "Corporate Events"
+    ]
+  },
+  {
+    "name": "Sarah Mystique",
+    "businessName": "Mystique Magic",
+    "location": {
+      "city": "New York",
+      "state": "NY"
+    },
+    "website": "https://www.mystique-magic.com",
+    "phone": "(555) 234-5678",
+    "email": "sarah@mystique-magic.com",
+    "source": "Sample Data",
+    "sourceUrl": "manual",
+    "description": "Award-winning illusionist with over 15 years of experience",
+    "services": [
+      "Illusions",
+      "Wedding Entertainment",
+      "Theater Shows"
+    ]
+  }
+]

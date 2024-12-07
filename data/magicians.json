@@ -1,0 +1,35 @@
+{
+  "magicians": [
+    {
+      "id": "m001",
+      "name": "David Copperfield",
+      "services": [
+        "Stage Magic",
+        "Illusions",
+        "Close-up Magic"
+      ],
+      "location": {
+        "city": "Las Vegas",
+        "state": "NV",
+        "coordinates": {
+          "latitude": 36.1699,
+          "longitude": -115.1398
+        }
+      },
+      "contact": {
+        "email": "booking@davidcopperfield.com",
+        "phone": "555-0123",
+        "website": "https://www.davidcopperfield.com"
+      },
+      "specialties": [
+        "Large Scale Illusions",
+        "Disappearing Acts"
+      ],
+      "experience_years": 40,
+      "rating": 4.9,
+      "reviews_count": 1500
+    }
+  ],
+  "last_updated": "2024-12-07T21:52:56.595510",
+  "total_count": 1
+}
