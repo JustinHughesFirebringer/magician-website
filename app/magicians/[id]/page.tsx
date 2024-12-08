@@ -5,7 +5,6 @@ import { supabase } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import Skeleton from "@/components/ui/skeleton";
 import Separator from "@/components/ui/separator";
 import { 
   PhoneIcon, 
@@ -98,13 +97,13 @@ export default function MagicianPage({ params }: { params: { id: string } }) {
         <div className="space-y-8">
           <Card>
             <CardHeader>
-              <Skeleton className="h-8 w-[300px]" />
-              <Skeleton className="h-4 w-[200px]" />
+              <div className="h-8 w-[300px] bg-gray-200 rounded animate-pulse" />
+              <div className="h-4 w-[200px] bg-gray-200 rounded animate-pulse mt-2" />
             </CardHeader>
             <CardContent className="space-y-4">
-              <Skeleton className="h-4 w-[250px]" />
-              <Skeleton className="h-4 w-[200px]" />
-              <Skeleton className="h-4 w-[150px]" />
+              <div className="h-4 w-[250px] bg-gray-200 rounded animate-pulse" />
+              <div className="h-4 w-[200px] bg-gray-200 rounded animate-pulse" />
+              <div className="h-4 w-[150px] bg-gray-200 rounded animate-pulse" />
             </CardContent>
           </Card>
         </div>
