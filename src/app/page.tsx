@@ -3,7 +3,6 @@ import SearchForm from '@/components/SearchForm';
 import { Wand2, MapPin, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 
 export default async function HomePage() {
   const [popularServices, locations] = await Promise.all([
@@ -90,14 +89,13 @@ export default async function HomePage() {
           <h2 className="text-3xl font-bold text-center mb-8">Popular Services</h2>
           <div className="flex flex-wrap justify-center gap-4">
             {popularServices.map((service) => (
-              <Badge
+              <div
                 key={service.service}
-                variant="secondary"
-                className="text-lg py-2 px-4"
+                className="inline-flex items-center rounded-full border px-4 py-2 text-lg font-semibold border-transparent bg-secondary text-secondary-foreground"
               >
                 {service.service}
                 <span className="ml-2 text-muted-foreground">({service.count})</span>
-              </Badge>
+              </div>
             ))}
           </div>
         </div>

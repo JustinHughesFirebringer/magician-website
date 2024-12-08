@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/ui/skeleton";
 import Separator from "@/components/ui/separator";
@@ -131,7 +130,9 @@ export default function MagicianPage({ params }: { params: { id: string } }) {
                 )}
               </div>
               {magician.verified && (
-                <Badge variant="secondary">Verified</Badge>
+                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-secondary text-secondary-foreground">
+                  Verified
+                </div>
               )}
             </div>
           </CardHeader>
@@ -166,10 +167,10 @@ export default function MagicianPage({ params }: { params: { id: string } }) {
               )}
               {magician.rating && (
                 <div className="flex items-center space-x-2">
-                  <Badge variant="secondary">
+                  <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-secondary text-secondary-foreground">
                     ★ {magician.rating.toFixed(1)}
                     {magician.review_count > 0 && ` (${magician.review_count} reviews)`}
-                  </Badge>
+                  </div>
                 </div>
               )}
             </div>
@@ -229,7 +230,7 @@ export default function MagicianPage({ params }: { params: { id: string } }) {
                 <div key={review.id} className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <Badge variant="secondary">
+                      <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-secondary text-secondary-foreground">
                         {[...Array(5)].map((_, i) => (
                           <span
                             key={i}
@@ -238,7 +239,7 @@ export default function MagicianPage({ params }: { params: { id: string } }) {
                             ★
                           </span>
                         ))}
-                      </Badge>
+                      </div>
                       <span className="font-medium">{review.reviewer_name}</span>
                     </div>
                     {review.event_date && (

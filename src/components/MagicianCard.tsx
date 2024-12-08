@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { Magician } from '@/types/magician';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
 export default function MagicianCard({ magician }: { magician: Magician }) {
@@ -43,21 +42,19 @@ export default function MagicianCard({ magician }: { magician: Magician }) {
           )}
           <div className="flex flex-wrap gap-2">
             {magician.specialties.slice(0, 2).map((specialty) => (
-              <Badge
+              <div
                 key={specialty}
-                variant="secondary"
-                className="transition-colors group-hover:bg-primary/20 group-hover:text-primary"
+                className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-secondary text-secondary-foreground transition-colors group-hover:bg-primary/20 group-hover:text-primary"
               >
                 {specialty}
-              </Badge>
+              </div>
             ))}
             {magician.specialties.length > 2 && (
-              <Badge
-                variant="outline"
-                className="text-muted-foreground"
+              <div
+                className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold text-muted-foreground"
               >
                 +{magician.specialties.length - 2} more
-              </Badge>
+              </div>
             )}
           </div>
         </CardContent>
