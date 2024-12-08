@@ -1,12 +1,15 @@
+'use client';
+
 import { Magician } from '@/types/magician';
 import Link from 'next/link';
 import { Star, MapPin, Globe, Phone } from 'lucide-react';
 import Image from 'next/image';
+import ExternalLink from './ExternalLink';
 
 interface MagicianListProps {
   magicians: Magician[];
-  currentPage: number;
-  totalPages: number;
+  currentPage?: number;
+  totalPages?: number;
 }
 
 export default function MagicianList({ magicians, currentPage, totalPages }: MagicianListProps) {
@@ -43,34 +46,30 @@ export default function MagicianList({ magicians, currentPage, totalPages }: Mag
               
               <div className="flex items-center text-sm text-gray-500 mb-2">
                 <MapPin className="w-4 h-4 mr-1" />
-                <span>{magician.city}, {magician.state}</span>
+                <span>{magician.location.city}, {magician.location.state}</span>
               </div>
 
-              {magician.website && (
+              {magician.websiteUrl && (
                 <div className="flex items-center text-sm text-gray-500 mb-2">
                   <Globe className="w-4 h-4 mr-1" />
-                  <a
-                    href={magician.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <ExternalLink
+                    href={magician.websiteUrl}
                     className="text-indigo-600 hover:text-indigo-800"
-                    onClick={(e) => e.stopPropagation()}
                   >
                     Visit Website
-                  </a>
+                  </ExternalLink>
                 </div>
               )}
 
               {magician.phone && (
                 <div className="flex items-center text-sm text-gray-500 mb-2">
                   <Phone className="w-4 h-4 mr-1" />
-                  <a
+                  <ExternalLink
                     href={`tel:${magician.phone}`}
                     className="text-indigo-600 hover:text-indigo-800"
-                    onClick={(e) => e.stopPropagation()}
                   >
                     {magician.phone}
-                  </a>
+                  </ExternalLink>
                 </div>
               )}
 
@@ -87,7 +86,7 @@ export default function MagicianList({ magicians, currentPage, totalPages }: Mag
 
               {magician.rating && (
                 <div className="mt-3 flex items-center">
-                  <Star className="w-4 h-4 text-yellow-400 mr-1" />
+                  <Star className="w-4 h-4 text-yellow-400" />
                   <span className="text-sm text-gray-600">
                     {magician.rating.toFixed(1)} ({magician.reviewCount} reviews)
                   </span>
@@ -98,7 +97,7 @@ export default function MagicianList({ magicians, currentPage, totalPages }: Mag
         ))}
       </div>
 
-      {totalPages > 1 && (
+      {totalPages && totalPages > 1 && (
         <div className="mt-8 flex justify-center">
           <nav className="flex items-center gap-2">
             {[...Array(totalPages)].map((_, i) => {

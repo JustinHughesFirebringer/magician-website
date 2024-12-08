@@ -34,7 +34,7 @@ export default async function MagicianProfile({ params }: { params: { id: string
                 <div className="flex items-center gap-4 text-gray-600 mb-4">
                   <div className="flex items-center">
                     <MapPin size={18} className="mr-1" />
-                    {magician.city}, {magician.state}
+                    {magician.location.city}, {magician.location.state}
                   </div>
                   {magician.rating && (
                     <div className="flex items-center">
@@ -120,13 +120,13 @@ export default async function MagicianProfile({ params }: { params: { id: string
               <div className="space-y-4">
                 <div className="flex items-center">
                   <MapPin className="w-5 h-5 text-gray-400 mr-3" />
-                  <span className="text-gray-700">Based in {magician.city}, {magician.state}</span>
+                  <span className="text-gray-700">Based in {magician.location.city}, {magician.location.state}</span>
                 </div>
-                {magician.website && (
+                {magician.websiteUrl && (
                   <div className="flex items-center">
                     <Globe className="w-5 h-5 text-gray-400 mr-3" />
                     <a
-                      href={magician.website}
+                      href={magician.websiteUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:text-blue-800"

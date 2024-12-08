@@ -33,7 +33,7 @@ export default async function HomePage() {
 
           {/* Search Form */}
           <div className="mt-10 max-w-xl mx-auto">
-            <SearchForm className="w-full" />
+            <SearchForm className="w-full" initialState="" initialCity="" />
           </div>
         </div>
       </section>

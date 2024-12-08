@@ -11,15 +11,15 @@ export async function GET(request: Request) {
     const service = searchParams.get('service') || undefined;
     const query = searchParams.get('query') || undefined;
     const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '10');
+    const pageSize = parseInt(searchParams.get('limit') || '10');
 
     const results = await searchMagicians({
+      query,
+      service,
       state,
       city,
-      service,
-      query,
       page,
-      limit
+      pageSize
     });
 
     return NextResponse.json(results);

@@ -1,4 +1,6 @@
 import * as React from "react"
+// Ensure 'class-variance-authority' is installed
+// Run 'npm install class-variance-authority'
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"

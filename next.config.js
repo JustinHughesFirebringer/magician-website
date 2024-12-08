@@ -1,37 +1,27 @@
-const path = require('path');
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  poweredByHeader: false,
   compress: true,
   swcMinify: true,
   images: {
-    domains: ['images.unsplash.com', 'plus.unsplash.com'],
+    domains: ['images.unsplash.com'],
     unoptimized: process.env.NODE_ENV === 'development',
   },
   reactStrictMode: true,
-  optimizeFonts: false,
-  typescript: {
-    ignoreBuildErrors: false, // Enable type checking
-  },
-  webpack: (config, { isServer }) => {
-    config.optimization = {
-      ...config.optimization,
-      minimize: true,
-      splitChunks: {
-        chunks: 'all',
-        minSize: 20000,
-        maxSize: 100000,
-      },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname, './src'),
     };
     return config;
   },
-  // Add proper error handling
-  onError: (err) => {
-    console.error('Next.js build error:', err);
-  },
   // Enable source maps in production for better error tracking
   productionBrowserSourceMaps: true,
-}
+};
 
-module.exports = nextConfig
+export default nextConfig;

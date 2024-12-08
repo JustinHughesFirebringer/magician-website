@@ -6,12 +6,12 @@
       "city": "Los Angeles",
       "state": "CA"
     },
-    "website": "https://www.wondermagic.com",
-    "phone": "(555) 123-4567",
+    "website": "https://wondermagic.com",
+    "phone": "555-0123",
     "email": "david@wondermagic.com",
-    "source": "Sample Data",
-    "sourceUrl": "manual",
-    "description": "Professional magician specializing in corporate events and private parties",
+    "source": "mock",
+    "sourceUrl": "https://example.com",
+    "description": "Professional magician specializing in close-up magic and stage illusions",
     "services": [
       "Close-up Magic",
       "Stage Shows",
@@ -19,22 +19,41 @@
     ]
   },
   {
-    "name": "Sarah Mystique",
-    "businessName": "Mystique Magic",
+    "name": "Sarah Mystery",
+    "businessName": "Mystery Magic",
     "location": {
       "city": "New York",
       "state": "NY"
     },
-    "website": "https://www.mystique-magic.com",
-    "phone": "(555) 234-5678",
-    "email": "sarah@mystique-magic.com",
-    "source": "Sample Data",
-    "sourceUrl": "manual",
-    "description": "Award-winning illusionist with over 15 years of experience",
+    "website": "https://mysterymagic.com",
+    "phone": "555-0124",
+    "email": "sarah@mysterymagic.com",
+    "source": "mock",
+    "sourceUrl": "https://example.com",
+    "description": "Award-winning magician with expertise in mentalism and parlor magic",
     "services": [
-      "Illusions",
-      "Wedding Entertainment",
-      "Theater Shows"
+      "Mentalism",
+      "Parlor Magic",
+      "Wedding Entertainment"
+    ]
+  },
+  {
+    "name": "Michael Illusion",
+    "businessName": "Grand Illusions",
+    "location": {
+      "city": "Chicago",
+      "state": "IL"
+    },
+    "website": "https://grandillusions.com",
+    "phone": "555-0125",
+    "email": "michael@grandillusions.com",
+    "source": "mock",
+    "sourceUrl": "https://example.com",
+    "description": "Master illusionist performing grand stage shows and intimate performances",
+    "services": [
+      "Stage Illusions",
+      "Private Shows",
+      "Birthday Parties"
     ]
   }
 ]

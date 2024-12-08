@@ -8,13 +8,21 @@ interface MagicianCardProps {
 const MagicianCard: React.FC<MagicianCardProps> = ({ magician }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-4">
-      <img src={magician.imageUrl} alt={magician.name} className="w-full h-48 object-cover rounded-md" />
+      <img 
+        src={magician.imageUrl || '/placeholder-magician.jpg'} 
+        alt={magician.name} 
+        className="w-full h-48 object-cover rounded-md" 
+      />
       <h3 className="text-xl font-semibold">{magician.name}</h3>
-      <p>{magician.businessName}</p>
-      <p>{magician.city}, {magician.state}</p>
-      <p>Rating: {magician.rating} ({magician.reviewCount} reviews)</p>
-      <p>{magician.description}</p>
-      <a href={magician.website} className="text-blue-500">Visit Website</a>
+      {magician.business_name && <p>{magician.business_name}</p>}
+      {(magician.city && magician.state) && <p>{magician.city}, {magician.state}</p>}
+      {(magician.rating && magician.review_count) && (
+        <p>Rating: {magician.rating} ({magician.review_count} reviews)</p>
+      )}
+      {magician.description && <p>{magician.description}</p>}
+      {magician.website_url && (
+        <a href={magician.website_url} className="text-blue-500">Visit Website</a>
+      )}
     </div>
   );
 };

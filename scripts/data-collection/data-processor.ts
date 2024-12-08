@@ -1,7 +1,11 @@
 import { readFile, writeFile } from 'fs/promises';
-import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 import axios from 'axios';
 import { setTimeout } from 'timers/promises';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 interface RawListing {
   name: string;
@@ -52,7 +56,7 @@ class DataProcessor {
   };
 
   async loadRawData(filename: string): Promise<RawListing[]> {
-    const filePath = path.join(__dirname, '../../data', filename);
+    const filePath = join(__dirname, '../../data', filename);
     const data = await readFile(filePath, 'utf-8');
     return JSON.parse(data);
   }
@@ -210,7 +214,7 @@ class DataProcessor {
   }
 
   async saveProcessedData(data: ProcessedListing[], filename: string) {
-    const outputPath = path.join(__dirname, '../../data', filename);
+    const outputPath = join(__dirname, '../../data', filename);
     await writeFile(outputPath, JSON.stringify(data, null, 2));
     console.log(`Saved ${data.length} processed listings to ${outputPath}`);
   }

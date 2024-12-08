@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
   apps: [{
     name: 'magician-website',
     script: 'node_modules/next/dist/bin/next',
@@ -15,3 +15,5 @@ module.exports = {
     }
   }]
 };
+
+export default config;

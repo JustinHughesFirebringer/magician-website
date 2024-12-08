@@ -39,6 +39,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             </Link>
             <SearchForm 
               initialQuery={searchParams.query || ''} 
+              initialState={searchParams.state || ''}
+              initialCity={searchParams.city || ''}
               className="max-w-xl w-full"
             />
           </div>
@@ -58,7 +60,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           <div className="flex-1">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-semibold text-gray-900">
-                {searchResults.totalCount} Magicians Found
+                {searchResults.total} Magicians Found
               </h2>
               
               {/* Add filters/sort options here if needed */}

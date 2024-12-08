@@ -1,26 +1,31 @@
 export interface Location {
+  id: string;
+  address_line1?: string;
   city: string;
   state: string;
-  coordinates: {
-    latitude: number;
-    longitude: number;
-  };
+  latitude: number | null;
+  longitude: number | null;
+  service_radius_miles: number | null;
+  is_primary: boolean;
 }
 
 export interface Magician {
-  id: number;
+  id: string;
   name: string;
-  email?: string;
-  phone?: string;
-  websiteUrl?: string;
-  rating?: number;
-  reviewCount?: number;
-  verified: boolean;
-  location: Location;
-  specialties: string[];
-  availability: string;
-  createdAt: Date;
-  updatedAt: Date;
+  business_name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  website_url?: string | null;
+  description?: string | null;
+  price_range_min?: number | null;
+  price_range_max?: number | null;
+  rating?: number | null;
+  review_count?: number | null;
+  verified: boolean | null;
+  locations: Location[];
+  availability: string[];
+  created_at: string;
+  updated_at: string;
 }
 
 export interface MagicianWithDistance extends Magician {

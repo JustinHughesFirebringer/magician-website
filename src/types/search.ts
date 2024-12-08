@@ -2,8 +2,8 @@ import type { Magician } from './magician';
 
 export interface SearchParams {
   query?: string;
-  service?: string;
-  location?: string;
+  state?: string;
+  city?: string;
   latitude?: number;
   longitude?: number;
   radius?: number;
@@ -20,6 +20,5 @@ export interface SearchResults {
 }
 
 export interface FilterData {
-  services: Array<{ service: string; count: number }>;
   locations: Array<{ state: string; city: string; magicianCount: number }>;
 }

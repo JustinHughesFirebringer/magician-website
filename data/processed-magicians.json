@@ -1,0 +1,84 @@
+[
+  {
+    "name": "David Wonder",
+    "businessName": "Wonder Magic Shows",
+    "location": {
+      "city": "Los Angeles",
+      "state": "CA",
+      "coordinates": {
+        "lat": 34.0536909,
+        "lng": -118.242766
+      }
+    },
+    "contact": {
+      "website": "https://wondermagic.com",
+      "email": "david@wondermagic.com"
+    },
+    "services": [
+      "Close-up Magic",
+      "Stage Magic",
+      "Corporate Magic"
+    ],
+    "description": "Professional magician specializing in close-up magic and stage illusions",
+    "sources": [
+      {
+        "name": "mock",
+        "url": "https://example.com"
+      }
+    ]
+  },
+  {
+    "name": "Sarah Mystery",
+    "businessName": "Mystery Magic",
+    "location": {
+      "city": "New York",
+      "state": "NY",
+      "coordinates": {
+        "lat": 40.7127281,
+        "lng": -74.0060152
+      }
+    },
+    "contact": {
+      "website": "https://mysterymagic.com",
+      "email": "sarah@mysterymagic.com"
+    },
+    "services": [
+      "Mentalism",
+      "Wedding Entertainment"
+    ],
+    "description": "Award-winning magician with expertise in mentalism and parlor magic",
+    "sources": [
+      {
+        "name": "mock",
+        "url": "https://example.com"
+      }
+    ]
+  },
+  {
+    "name": "Michael Illusion",
+    "businessName": "Grand Illusions",
+    "location": {
+      "city": "Chicago",
+      "state": "IL",
+      "coordinates": {
+        "lat": 41.8755616,
+        "lng": -87.6244212
+      }
+    },
+    "contact": {
+      "website": "https://grandillusions.com",
+      "email": "michael@grandillusions.com"
+    },
+    "services": [
+      "Stage Magic",
+      "Children's Magic"
+    ],
+    "description": "Master illusionist performing grand stage shows and intimate performances",
+    "sources": [
+      {
+        "name": "mock",
+        "url": "https://example.com"
+      }
+    ]
+  }
+]
