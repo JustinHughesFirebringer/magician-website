@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import { createClient, supabaseOperations, createQueryBuilder } from '@/lib/supabase/client';
+import { createClient, createQueryBuilder } from '@/lib/supabase/client';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -69,13 +69,10 @@ export default function DirectoryPage() {
       }
 
       // First try to find location matches using the operations wrapper
-      const locationMatches = await supabaseOperations.query(
-        'searchLocations',
-        (client) => client.rpc('search_magician_locations', {
-          search_term: query.toLowerCase(),
-          similarity_threshold: 0.3
-        })
-      );
+      const locationMatches = await createClient().rpc('search_magician_locations', {
+        search_term: query.toLowerCase(),
+        similarity_threshold: 0.3
+      });
 
       setLocationSuggestions(locationMatches || []);
 
@@ -97,13 +94,10 @@ export default function DirectoryPage() {
         ` : 'id.gt.0')
         .limit(50);
 
-      const magicianData = await supabaseOperations.query(
-        'searchMagicians',
-        () => magicianQuery
-      );
+      const magicianData = await magicianQuery.execute();
 
       if (magicianData) {
-        const formattedData = magicianData.map(magician => ({
+        const formattedData = magicianData.data.map(magician => ({
           ...magician,
           locations: magician.magician_locations || []
         }));
