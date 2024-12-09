@@ -1,4 +1,4 @@
-import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+import { createClient as createSupabaseClient, SupabaseClient } from '@supabase/supabase-js';
 import type { Database } from '../../types/database';
 import type { Magician } from '../../types/magician';
 
@@ -13,7 +13,7 @@ export const supabase = createSupabaseClient(
       persistSession: false
     }
   }
-) as ReturnType<typeof createSupabaseClient<Database>>;
+) as SupabaseClient<Database>;
 
 export async function createMagiciansTable() {
   const { error } = await supabase.rpc('create_magicians_table');
