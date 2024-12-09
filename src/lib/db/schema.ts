@@ -1,6 +1,6 @@
 import { createClient } from '../supabase/client';
-import type { Database } from '../../types/database';
-import type { Magician } from '../../types/magician';
+import type { Database } from '@/types/database';
+import type { Magician } from '@/types/magician';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 if (!supabaseUrl) {
@@ -30,3 +30,4 @@ export async function insertMagician(magician: Magician) {
     throw error;
   }
 }
+

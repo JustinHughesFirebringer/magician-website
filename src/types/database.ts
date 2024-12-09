@@ -3,109 +3,81 @@ export interface Database {
     Tables: {
       magicians: {
         Row: {
-          id: string;
+          id: number;
           name: string;
-          business_name: string | null;
-          email: string | null;
-          phone: string | null;
-          website_url: string | null;
-          avatar_url: string | null;
+          slug: string;
+          city: string;
+          state: string;
+          latitude: number;
+          longitude: number;
+          rating: number | null;
+          types: string[] | null;
+          working_hours: string | null;
           bio: string | null;
-          created_at: string;
-          updated_at: string;
+          website_url: string | null;
+          photo_1: string | null;
+          photo_2: string | null;
+          photo_3: string | null;
+          photo_4: string | null;
+          photo_5: string | null;
+          photo_6: string | null;
+          photo_7: string | null;
+          photo_8: string | null;
         };
         Insert: {
-          id?: string;
+          id?: number;
           name: string;
-          business_name?: string | null;
-          email?: string | null;
-          phone?: string | null;
-          website_url?: string | null;
-          avatar_url?: string | null;
+          slug: string;
+          city: string;
+          state: string;
+          latitude: number;
+          longitude: number;
+          rating?: number | null;
+          types?: string[] | null;
+          working_hours?: string | null;
           bio?: string | null;
-          created_at?: string;
-          updated_at?: string;
+          website_url?: string | null;
+          photo_1?: string | null;
+          photo_2?: string | null;
+          photo_3?: string | null;
+          photo_4?: string | null;
+          photo_5?: string | null;
+          photo_6?: string | null;
+          photo_7?: string | null;
+          photo_8?: string | null;
         };
         Update: {
-          id?: string;
+          id?: number;
           name?: string;
-          business_name?: string | null;
-          email?: string | null;
-          phone?: string | null;
-          website_url?: string | null;
-          avatar_url?: string | null;
-          bio?: string | null;
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
-      magician_locations: {
-        Row: {
-          id: string;
-          magician_id: string;
-          address: string | null;
-          city: string;
-          state: string;
-          postal_code: string | null;
-          latitude: number;
-          longitude: number;
-          service_radius_miles: number;
-          is_primary: boolean;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          magician_id: string;
-          address?: string | null;
-          city: string;
-          state: string;
-          postal_code?: string | null;
-          latitude: number;
-          longitude: number;
-          service_radius_miles: number;
-          is_primary: boolean;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          magician_id?: string;
-          address?: string | null;
+          slug?: string;
           city?: string;
           state?: string;
-          postal_code?: string | null;
           latitude?: number;
           longitude?: number;
-          service_radius_miles?: number;
-          is_primary?: boolean;
-          created_at?: string;
-          updated_at?: string;
+          rating?: number | null;
+          types?: string[] | null;
+          working_hours?: string | null;
+          bio?: string | null;
+          website_url?: string | null;
+          photo_1?: string | null;
+          photo_2?: string | null;
+          photo_3?: string | null;
+          photo_4?: string | null;
+          photo_5?: string | null;
+          photo_6?: string | null;
+          photo_7?: string | null;
+          photo_8?: string | null;
         };
       };
-      magician_availability: {
-        Row: {
-          id: string;
-          magician_id: string;
-          availability: string;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          magician_id: string;
-          availability: string;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          magician_id?: string;
-          availability?: string;
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      [_ in never]: never;
+    };
+    Enums: {
+      [_ in never]: never;
     };
   };
 }

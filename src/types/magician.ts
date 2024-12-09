@@ -8,11 +8,16 @@ export interface Location {
   longitude: number;
   service_radius_miles: number | null;
   is_primary: boolean;
+  slug: string;
+  magician_id: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Magician {
   id: string;
   name: string;
+  slug: string;
   business_name?: string | null;
   email?: string | null;
   phone?: string | null;
@@ -37,4 +42,30 @@ export interface Magician {
 
 export interface MagicianWithDistance extends Magician {
   distance?: number;
+}
+
+export interface MagicianResponse {
+  data: Magician[] | null;
+  error: Error | null;
+  count?: number;
+}
+
+export interface LocationResponse {
+  data: Location[] | null;
+  error: Error | null;
+  count?: number;
+}
+
+export interface MagicianSearchParams {
+  city?: string;
+  state?: string;
+  slug?: string;
+  service?: string;
+  radius?: number;
+  latitude?: number;
+  longitude?: number;
+  page?: number;
+  limit?: number;
+  sortBy?: 'distance' | 'rating' | 'review_count';
+  order?: 'asc' | 'desc';
 }

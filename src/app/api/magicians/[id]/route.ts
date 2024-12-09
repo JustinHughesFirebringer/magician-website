@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getMagicianById } from '../../../../lib/db/queries';
+import { getMagicianById } from '@/lib/db/queries';
 
 export async function GET(
   request: Request,

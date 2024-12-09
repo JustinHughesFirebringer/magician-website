@@ -1,93 +1,73 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { Search as SearchIcon } from 'lucide-react';
-import { Input } from './ui/input';
-import { Button } from './ui/button';
-import { cn } from '../lib/utils';
+import { useRouter } from 'next/navigation';
+import { states } from '../lib/constants';
 
 interface SearchFormProps {
-  initialQuery?: string;
-  initialState?: string;
   initialCity?: string;
-  initialService?: string;
-  className?: string;
+  initialState?: string;
 }
 
 export default function SearchForm({ 
-  initialQuery = '', 
+  initialCity = '', 
   initialState = '',
-  initialCity = '',
-  initialService = '',
-  className = '' 
 }: SearchFormProps) {
   const router = useRouter();
-  const [query, setQuery] = useState(initialQuery);
-  const [state, setState] = useState(initialState);
   const [city, setCity] = useState(initialCity);
-  const [service, setService] = useState(initialService);
+  const [state, setState] = useState(initialState);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const searchParams = new URLSearchParams();
-    if (query) {
-      searchParams.set('query', query);
-    }
-    if (state) {
-      searchParams.set('state', state);
-    }
-    if (city) {
-      searchParams.set('city', city);
-    }
-    if (service) {
-      searchParams.set('service', service);
-    }
-    router.push(`/search?${searchParams.toString()}`);
+    
+    const params = new URLSearchParams();
+    if (city) params.set('city', city);
+    if (state) params.set('state', state);
+    
+    router.push(`/search?${params.toString()}`);
   };
 
   return (
-    <form onSubmit={handleSubmit} className={cn('relative', className)}>
-      <div className="relative flex items-center gap-2">
-        <div className="relative flex-1">
-          <Input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search magicians..."
-            className="pl-10"
-          />
-          <SearchIcon 
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" 
-          />
-        </div>
-        <Input
+    <form onSubmit={handleSubmit} className="flex gap-4">
+      <div>
+        <input
           type="text"
+          placeholder="Enter city"
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          placeholder="City"
-          className="w-32"
+          className="px-4 py-2 bg-white border border-indigo-200 text-gray-900 rounded-md 
+                   focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
+                   placeholder:text-indigo-300 hover:border-indigo-400
+                   shadow-sm transition-colors duration-200"
         />
-        <Input
-          type="text"
+      </div>
+      
+      <div>
+        <select
           value={state}
           onChange={(e) => setState(e.target.value)}
-          placeholder="State"
-          className="w-32"
-        />
-        <Input
-          type="text"
-          value={service}
-          onChange={(e) => setService(e.target.value)}
-          placeholder="Service"
-          className="w-32"
-        />
-        <Button
-          type="submit"
+          className="px-4 py-2 bg-white border border-indigo-200 text-gray-900 rounded-md
+                   focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
+                   hover:border-indigo-400 shadow-sm transition-colors duration-200"
         >
-          Search
-        </Button>
+          <option value="">Select state</option>
+          {states.map((st) => (
+            <option key={st} value={st}>
+              {st}
+            </option>
+          ))}
+        </select>
       </div>
+
+      <button
+        type="submit"
+        className="px-4 py-2 bg-indigo-600 text-white rounded-md 
+                 hover:bg-indigo-700 focus:outline-none focus:ring-2 
+                 focus:ring-indigo-500 focus:ring-offset-2
+                 shadow-sm transition-colors duration-200"
+      >
+        Search
+      </button>
     </form>
   );
 }

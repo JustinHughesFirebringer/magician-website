@@ -25,3 +25,4 @@ export default function ExternalLink({ href, className, children }: ExternalLink
     </a>
   );
 }
+

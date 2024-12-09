@@ -1,7 +1,7 @@
-import { supabase } from '../supabase/client';
-import type { Magician } from '../../types/magician';
-import type { SearchParams, SearchResults, FilterData } from '../../types/search';
-import type { Database } from '../../types/database';
+import { supabase } from '@/lib/supabase/client';
+import type { Magician, MagicianSearchParams, MagicianResponse } from '@/types/magician';
+import type { SearchParams, SearchResults, FilterData } from '@/types/search';
+import type { Database } from '@/types/database';
 import { calculateHaversineDistance } from '../utils';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -10,48 +10,48 @@ const isBuildTime = process.env.NEXT_PHASE === 'phase-production-build';
 interface MagicianWithRelations {
   id: string;
   name: string;
+  slug: string;
   business_name: string | null;
   email: string | null;
   phone: string | null;
   website_url: string | null;
   avatar_url: string | null;
   bio: string | null;
+  city: string | null;
+  state: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  services: string[] | null;
   created_at: string;
   updated_at: string;
-  magicianLocations: Database['public']['Tables']['magician_locations']['Row'][];
-  magicianAvailability: Database['public']['Tables']['magician_availability']['Row'][];
 }
 
 // Helper function to format magician data
-export function formatMagician(data: MagicianWithRelations): Magician {
+function formatMagician(data: MagicianWithRelations): Magician {
   return {
     id: data.id,
     name: data.name,
+    slug: data.slug,
     business_name: data.business_name,
     email: data.email,
     phone: data.phone,
     website_url: data.website_url,
-    description: data.bio || null,  // Map bio to description
-    price_range_min: null,  // These fields don't exist in DB yet
+    description: data.bio || null,
+    price_range_min: null,
     price_range_max: null,
     rating: null,
     review_count: null,
-    verified: false,  // Default to false since we don't have this field yet
-    locations: data.magicianLocations.map(loc => ({
-      id: loc.id,
-      ...(loc.address && { address_line1: loc.address }),
-      city: loc.city,
-      state: loc.state,
-      postal_code: loc.postal_code || null,  // Added postal_code
-      latitude: loc.latitude,  // Now required
-      longitude: loc.longitude,  // Now required
-      service_radius_miles: null,  // This field doesn't exist in DB yet
-      is_primary: true  // Default to true since we don't have this field yet
-    })),
-    availability: data.magicianAvailability.map(a => a.availability),
+    verified: false,
+    location: {
+      city: data.city || '',
+      state: data.state || '',
+      latitude: data.latitude || 0,
+      longitude: data.longitude || 0
+    },
+    services: data.services || [],
     created_at: data.created_at,
     updated_at: data.updated_at,
-    image_url: data.avatar_url || null  // Use avatar_url from database
+    image_url: data.avatar_url || null
   };
 }
 
@@ -100,7 +100,7 @@ export async function getPopularServices(): Promise<{ service: string; count: nu
   }
 }
 
-export async function getLocations(): Promise<{ state: string; city: string; magicianCount: number }[]> {
+export const getLocations = async (): Promise<{ state: string; city: string; magicianCount: number }[]> => {
   try {
     if (isBuildTime) {
       return [];
@@ -116,7 +116,7 @@ export async function getLocations(): Promise<{ state: string; city: string; mag
     if (!data) return [];
 
     // Then count magicians per location in memory
-    const locationCounts = data.reduce((acc: Record<string, Location>, curr: Database['public']['Tables']['magician_locations']['Row']) => {
+    const locationCounts: Record<string, Location> = data.reduce<Record<string, Location>>((acc: Record<string, Location>, curr: { city: string; state: string }) => {
       const key = `${curr.city}, ${curr.state}`;
       if (!acc[key]) {
         acc[key] = {
@@ -131,12 +131,12 @@ export async function getLocations(): Promise<{ state: string; city: string; mag
 
     // Convert to array and sort
     return Object.values(locationCounts)
-      .map((location: typeof locationCounts[keyof typeof locationCounts]) => ({
+      .map(location => ({
         state: location.state,
         city: location.city,
         magicianCount: location.count
       }))
-      .sort((a: { magicianCount: number }, b: { magicianCount: number }) => b.magicianCount - a.magicianCount);
+      .sort((a, b) => b.magicianCount - a.magicianCount);
   } catch (error: unknown) {
     console.error('Error fetching locations:', error);
     return [];
@@ -163,96 +163,124 @@ export async function getFilterData(): Promise<FilterData> {
   }
 }
 
-export async function searchMagicians(params: SearchParams): Promise<SearchResults> {
+export async function getMagicianBySlug(slug: string): Promise<Magician | null> {
   try {
-    const {
-      query,
-      state,
-      city,
-      service,
-      latitude,
-      longitude,
-      radius = 50,
-      page = 1,
-      pageSize = 10
-    } = params;
-
-    let query_builder = supabase
+    const { data, error } = await supabase
       .from('magicians')
       .select(`
         *,
-        magicianLocations:magician_locations (*),
-        magicianAvailability:magician_availability (*)
-      `);
+        magicianLocations:magician_locations(*),
+        magicianAvailability:magician_availability(*)
+      `)
+      .eq('slug', slug)
+      .single();
 
-    // Apply filters
-    if (query) {
-      query_builder = query_builder.ilike('name', `%${query}%`);
+    if (error) {
+      console.error('Error fetching magician by slug:', error);
+      return null;
     }
 
-    if (state) {
-      query_builder = query_builder.eq('magicianLocations.state', state);
+    if (!data) return null;
+
+    return formatMagician(data);
+  } catch (error) {
+    console.error('Error in getMagicianBySlug:', error);
+    return null;
+  }
+}
+
+export async function getLocationBySlug(slug: string): Promise<Location | null> {
+  try {
+    const { data, error } = await supabase
+      .from('magician_locations')
+      .select('city, state, slug, count:id')
+      .eq('slug', slug)
+      .single();
+
+    if (error) {
+      console.error('Error fetching location by slug:', error);
+      return null;
     }
 
-    if (city) {
-      query_builder = query_builder.eq('magicianLocations.city', city);
+    return data;
+  } catch (error) {
+    console.error('Error in getLocationBySlug:', error);
+    return null;
+  }
+}
+
+// Enhanced search function that supports both legacy and new search patterns
+export async function searchMagicians(params: SearchParams | MagicianSearchParams): Promise<SearchResults> {
+  console.log('Search Parameters:', params);
+
+  try {
+    let query = supabase
+      .from('magicians')
+      .select('*', { count: 'exact' });
+
+    // Name search
+    if ('query' in params && params.query) {
+      query = query.ilike('name', `%${params.query}%`);
+      console.log('Applying name search:', params.query);
     }
 
-    if (service) {
-      query_builder = query_builder.contains('services', [service]);
+    // Location filtering
+    if ('city' in params && params.city) {
+      query = query.eq('city', params.city);
+      console.log('Applying city filter:', params.city);
+    }
+    if ('state' in params && params.state) {
+      query = query.eq('state', params.state);
+      console.log('Applying state filter:', params.state);
     }
 
-    // Calculate pagination
+    // Type filtering
+    if ('service' in params && params.service) {
+      query = query.contains('types', [params.service]);
+      console.log('Applying type filter:', params.service);
+    }
+
+    // Pagination
+    const page = ('page' in params ? params.page : 1) || 1;
+    const pageSize = ('pageSize' in params ? params.pageSize : 'limit' in params ? params.limit : 10) || 10;
     const from = (page - 1) * pageSize;
     const to = from + pageSize - 1;
 
-    // Execute query with pagination
-    const { data, error, count } = await query_builder
-      .range(from, to)
-      .order('created_at', { ascending: false });
+    query = query.range(from, to);
+    console.log('Applying pagination:', { page, pageSize, from, to });
 
-    if (error) throw error;
-    if (!data) return { magicians: [], total: 0, page, limit: pageSize, totalPages: 0 };
+    // Execute query
+    const { data, error, count } = await query;
+    
+    if (error) {
+      console.error('Search Error:', error);
+      throw error;
+    }
 
-    // Format magicians and calculate distances if coordinates provided
-    const formattedMagicians = data.map((magician: MagicianWithRelations) => {
-      const formatted = formatMagician(magician);
-      if (latitude && longitude) {
-        const magicianLocation = magician.magicianLocations?.[0];
-        if (magicianLocation?.latitude && magicianLocation?.longitude) {
-          const distance = calculateHaversineDistance(
-            latitude,
-            longitude,
-            magicianLocation.latitude,
-            magicianLocation.longitude
-          );
-          return { ...formatted, distance: distance as number };
-        }
+    return {
+      magicians: data || [],
+      pagination: {
+        currentPage: page,
+        totalPages: Math.ceil((count || 0) / pageSize),
+        totalResults: count || 0,
+        pageSize
       }
-      return formatted;
-    });
-
-    const total = count || 0;
-    const totalPages = Math.ceil(total / pageSize);
-
-    return {
-      magicians: formattedMagicians,
-      total,
-      page,
-      limit: pageSize,
-      totalPages
     };
 
-  } catch (error: unknown) {
-    console.error('Error searching magicians:', error);
-    return {
-      magicians: [],
-      total: 0,
-      page: params.page || 1,
-      limit: params.pageSize || 10,
-      totalPages: 0
-    };
+  } catch (error) {
+    console.error('Search Error:', error);
+    throw error;
   }
+}
+
+// Legacy support function for backward compatibility
+export async function searchMagiciansByLocation(city: string, state: string): Promise<SearchResults> {
+  return searchMagicians({ city, state });
+}
+
+// Legacy support function for service-based search
+export async function searchMagiciansByService(service: string): Promise<SearchResults> {
+  return searchMagicians({ service });
 }
 
 export async function getMagicianById(id: string): Promise<Magician | null> {

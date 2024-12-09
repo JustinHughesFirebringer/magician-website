@@ -1,13 +1,40 @@
 import { Star, MapPin } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Magician } from '../types/magician';
+import type { Magician } from '@/types/magician';
 import { Card, CardContent } from './ui/card';
-import { cn } from '../lib/utils';
+import { cn } from '@/lib/utils';
 
-export default function MagicianCard({ magician }: { magician: Magician }) {
+interface MagicianCardProps {
+  magician: Magician;
+}
+
+export default function MagicianCard({ magician }: MagicianCardProps) {
+  // Validate required data
+  if (!magician || !magician.id || !magician.name) {
+    console.warn('Invalid magician data:', magician);
+    return null;
+  }
+
+  // Ensure locations array exists and has at least one item
+  const hasLocation = magician.locations && magician.locations.length > 0;
+  if (!hasLocation) {
+    console.warn('Magician missing location data:', magician.id);
+    return null;
+  }
+
+  // Log magician data in development
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Rendering magician card:', {
+      id: magician.id,
+      name: magician.name,
+      location: `${magician.locations[0].city}, ${magician.locations[0].state}`,
+      services: magician.availability?.length || 0
+    });
+  }
+
   return (
-    <Link href={`/magicians/${magician.id}`} className="block">
+    <Link href={`/magicians/${magician.slug}`} className="block">
       <Card className="group overflow-hidden transition-all hover:shadow-lg">
         <div className="magic-glow absolute -inset-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <div className="relative h-48 w-full">
@@ -16,6 +43,10 @@ export default function MagicianCard({ magician }: { magician: Magician }) {
             alt={magician.name}
             fill
             className="object-cover"
+            onError={(e) => {
+              console.warn(`Failed to load image for magician: ${magician.id}`);
+              e.currentTarget.src = '/placeholder-magician.jpg';
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
         </div>
@@ -41,15 +72,19 @@ export default function MagicianCard({ magician }: { magician: Magician }) {
             </div>
           )}
           <div className="flex flex-wrap gap-2">
-            {magician.availability.slice(0, 2).map((service) => (
+            {magician.availability?.slice(0, 2).map((service) => (
               <div
                 key={service}
-                className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-secondary text-secondary-foreground transition-colors group-hover:bg-primary/20 group-hover:text-primary"
+                className={cn(
+                  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold",
+                  "border-transparent bg-secondary text-secondary-foreground",
+                  "transition-colors group-hover:bg-primary/20 group-hover:text-primary"
+                )}
               >
                 {service}
               </div>
             ))}
-            {magician.availability.length > 2 && (
+            {magician.availability && magician.availability.length > 2 && (
               <div
                 className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold text-muted-foreground"
               >

@@ -17,3 +17,4 @@ export function calculateHaversineDistance(lat1: number, lon1: number, lat2: num
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c; // Distance in miles
 }
+

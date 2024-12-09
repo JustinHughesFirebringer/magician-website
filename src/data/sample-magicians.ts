@@ -125,3 +125,4 @@ export const sampleMagicians: Magician[] = [
     ]
   }
 ];
+

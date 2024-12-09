@@ -1,8 +1,8 @@
-import { getPopularServices, getLocations } from '../lib/db/queries';
-import SearchForm from '../components/SearchForm';
+import { getPopularServices, getLocations } from '@/lib/db/queries';
+import SearchForm from '@/components/SearchForm';
 import { Wand2, MapPin, Star } from 'lucide-react';
-import { Button } from '../components/ui/button';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 
 export default async function HomePage() {
   const [popularServices, locations] = await Promise.all([
