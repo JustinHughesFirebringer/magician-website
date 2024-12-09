@@ -273,12 +273,12 @@ export async function getMagicianById(id: string): Promise<Magician | null> {
         )
       `)
       .eq('id', id)
-      .single<MagicianWithRelations>();
+      .single();
 
     if (error) throw error;
     if (!magician) return null;
 
-    return formatMagician(magician);
+    return formatMagician(magician as MagicianWithRelations);
   } catch (error: unknown) {
     console.error('Error fetching magician:', error);
     return null;
