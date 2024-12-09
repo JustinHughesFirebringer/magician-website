@@ -128,7 +128,7 @@ export async function getLocations(): Promise<{ state: string; city: string; mag
 
     // Convert to array and sort
     return Object.values(locationCounts)
-      .map((location: Location) => ({
+      .map((location: typeof locationCounts[keyof typeof locationCounts]) => ({
         state: location.state,
         city: location.city,
         magicianCount: location.count
