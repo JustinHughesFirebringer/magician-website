@@ -33,14 +33,15 @@ export function formatMagician(data: MagicianWithRelations): Magician {
     price_range_max: null,
     rating: null,
     review_count: null,
-    verified: false,
+    verified: false,  // Default to false since we don't have this field yet
     locations: data.magicianLocations.map(loc => ({
       id: loc.id,
       ...(loc.address && { address_line1: loc.address }),
       city: loc.city,
       state: loc.state,
-      latitude: loc.latitude,
-      longitude: loc.longitude,
+      postal_code: loc.postal_code || null,  // Added postal_code
+      latitude: loc.latitude,  // Now required
+      longitude: loc.longitude,  // Now required
       service_radius_miles: null,  // This field doesn't exist in DB yet
       is_primary: true  // Default to true since we don't have this field yet
     })),
@@ -112,7 +113,7 @@ export async function getLocations(): Promise<{ state: string; city: string; mag
     if (!data) return [];
 
     // Then count magicians per location in memory
-    const locationCounts = data.reduce<{ [key: string]: Location }>((acc, curr) => {
+    const locationCounts = data.reduce((acc: Record<string, Location>, curr) => {
       const key = `${curr.city}, ${curr.state}`;
       if (!acc[key]) {
         acc[key] = {

@@ -3,8 +3,9 @@ export interface Location {
   address_line1?: string;
   city: string;
   state: string;
-  latitude: number | null;
-  longitude: number | null;
+  postal_code?: string | null;
+  latitude: number;
+  longitude: number;
   service_radius_miles: number | null;
   is_primary: boolean;
 }
@@ -21,7 +22,7 @@ export interface Magician {
   price_range_max?: number | null;
   rating?: number | null;
   review_count?: number | null;
-  verified: boolean | null;
+  verified: boolean;
   locations: Location[];
   availability: string[];
   created_at: string;
