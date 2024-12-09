@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next'
 import { createServerClient } from '@/lib/supabase/server'
 
+const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://magician-website-52hhax192-justin-hughes-projects.vercel.app'
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = createServerClient()
 
@@ -11,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Create URLs for each location
   const searchUrls = (locations || []).map(loc => ({
-    url: `https://magician-website.vercel.app/search?city=${encodeURIComponent(loc.city.toLowerCase())}&state=${encodeURIComponent(loc.state.toUpperCase())}`,
+    url: `${baseUrl}/search?city=${encodeURIComponent(loc.city.toLowerCase())}&state=${encodeURIComponent(loc.state.toUpperCase())}`,
     lastModified: new Date(),
     changeFrequency: 'daily' as const,
     priority: 0.7,
@@ -20,19 +22,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Base URLs for the sitemap
   const baseUrls = [
     {
-      url: 'https://magician-website.vercel.app',
+      url: baseUrl,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1,
     },
     {
-      url: 'https://magician-website.vercel.app/about',
+      url: `${baseUrl}/about`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: 'https://magician-website.vercel.app/locations',
+      url: `${baseUrl}/locations`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,
@@ -47,7 +49,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Generate URLs for magician profile pages
   const magicianUrls = magicians?.map(magician => ({
-    url: `https://magician-website.vercel.app/magicians/${magician.slug}`,
+    url: `${baseUrl}/magicians/${magician.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.6,
