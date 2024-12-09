@@ -63,7 +63,7 @@ const haversineDistance = `
   ) as distance
 `;
 
-async function getPopularServices(): Promise<{ service: string; count: number }[]> {
+export async function getPopularServices(): Promise<{ service: string; count: number }[]> {
   try {
     if (isBuildTime) {
       return [];
@@ -76,7 +76,7 @@ async function getPopularServices(): Promise<{ service: string; count: number }[
   }
 }
 
-async function getLocations(): Promise<{ state: string; city: string; magicianCount: number }[]> {
+export async function getLocations(): Promise<{ state: string; city: string; magicianCount: number }[]> {
   try {
     if (isBuildTime) {
       return [];
@@ -122,7 +122,7 @@ async function getLocations(): Promise<{ state: string; city: string; magicianCo
   }
 }
 
-async function getFilterData(): Promise<FilterData> {
+export async function getFilterData(): Promise<FilterData> {
   try {
     const [locations] = await Promise.all([
       getLocations()
