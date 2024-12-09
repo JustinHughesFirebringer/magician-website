@@ -1,9 +1,9 @@
 import { SlidersHorizontal } from 'lucide-react';
-import MagicianCard from '@/components/MagicianCard';
-import FilterSidebar from '@/components/FilterSidebar';
-import SearchForm from '@/components/SearchForm';
-import { searchMagicians, getFilterData } from '@/lib/db/queries';
-import { Button } from '@/components/ui/button';
+import MagicianCard from '../../components/MagicianCard';
+import FilterSidebar from '../../components/FilterSidebar';
+import SearchForm from '../../components/SearchForm';
+import { searchMagicians, getFilterData } from '../../lib/db/queries';
+import { Button } from '../../components/ui/button';
 
 export default async function MagiciansPage() {
   const { services, locations } = await getFilterData();

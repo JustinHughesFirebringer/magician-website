@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
-import { getPopularServices, getLocations, searchMagicians, getFilterData } from '@/lib/db/queries';
-import SearchForm from '@/components/SearchForm';
-import MagicianList from '@/components/MagicianList';
-import { SearchResults, FilterData } from '@/types/search';
-import FilterSidebar from '@/components/FilterSidebar';
+import { getPopularServices, getLocations, searchMagicians, getFilterData } from '../../../lib/db/queries';
+import SearchForm from '../../../components/SearchForm';
+import MagicianList from '../../../components/MagicianList';
+import { SearchResults, FilterData } from '../../../types/search';
+import FilterSidebar from '../../../components/FilterSidebar';
 
 interface SearchPageProps {
   searchParams: {

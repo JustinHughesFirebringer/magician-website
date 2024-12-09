@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { searchMagicians } from '@/lib/db/queries';
+import { searchMagicians } from '../../../lib/db/queries';
 
 export const dynamic = 'force-dynamic';
 
