@@ -1,6 +1,6 @@
 'use client';
 
-import { Magician } from '@/types/magician';
+import { Magician } from '../types/magician';
 import Link from 'next/link';
 import { Star, MapPin, Globe, Phone } from 'lucide-react';
 import Image from 'next/image';

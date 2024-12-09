@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { cn } from '../lib/utils';
+import { Button } from './ui/button';
 import { Sparkles } from 'lucide-react';
 
 export function Header() {

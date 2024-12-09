@@ -1,9 +1,9 @@
 import { Star, MapPin } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Magician } from '@/types/magician';
-import { Card, CardContent } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
+import type { Magician } from '../types/magician';
+import { Card, CardContent } from './ui/card';
+import { cn } from '../lib/utils';
 
 export default function MagicianCard({ magician }: { magician: Magician }) {
   return (

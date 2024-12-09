@@ -1,6 +1,6 @@
 'use client';
 
-import { FilterData } from '@/types/search';
+import { FilterData } from '../types/search';
 import Link from 'next/link';
 
 interface LocationListProps {
