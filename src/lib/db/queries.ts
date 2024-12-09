@@ -1,4 +1,4 @@
-import { supabase } from '../supabase';
+import { supabase } from '../../lib/supabase';
 import { Magician } from '../../types/magician';
 import { SearchParams, SearchResults, FilterData } from '../../types/search';
 import { Database } from '../../types/database';
@@ -20,7 +20,7 @@ interface Location {
 }
 
 // Helper function to format magician data
-async function formatMagician(data: MagicianWithRelations): Promise<Magician> {
+export async function formatMagician(data: MagicianWithRelations): Promise<Magician> {
   return {
     id: data.id,
     name: data.name,
