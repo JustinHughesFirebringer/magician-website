@@ -1,10 +1,19 @@
 import { MetadataRoute } from 'next'
-import { createServerClient } from '@/lib/supabase/server'
+import { createClient } from '@/lib/supabase/server'
 
 const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://magician-website-52hhax192-justin-hughes-projects.vercel.app'
 
+function escapeXml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const supabase = createServerClient()
+  const supabase = createClient()
 
   // Fetch all cities from city_state table
   const { data: locations } = await supabase
@@ -13,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Create URLs for each location
   const searchUrls = (locations || []).map(loc => ({
-    url: `${baseUrl}/search?city=${encodeURIComponent(loc.city.toLowerCase())}&state=${encodeURIComponent(loc.state.toUpperCase())}`,
+    url: escapeXml(`${baseUrl}/search?city=${encodeURIComponent(loc.city.toLowerCase())}&state=${encodeURIComponent(loc.state.toUpperCase())}`),
     lastModified: new Date(),
     changeFrequency: 'daily' as const,
     priority: 0.7,
@@ -22,19 +31,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Base URLs for the sitemap
   const baseUrls = [
     {
-      url: baseUrl,
+      url: escapeXml(baseUrl),
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1,
     },
     {
-      url: `${baseUrl}/about`,
+      url: escapeXml(`${baseUrl}/about`),
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/locations`,
+      url: escapeXml(`${baseUrl}/locations`),
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.9,
@@ -49,7 +58,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Generate URLs for magician profile pages
   const magicianUrls = magicians?.map(magician => ({
-    url: `${baseUrl}/magicians/${magician.slug}`,
+    url: escapeXml(`${baseUrl}/magicians/${encodeURIComponent(magician.slug)}`),
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.6,
