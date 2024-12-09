@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { createClient } from '@/lib/supabase/server'
 
-const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://magician-website-52hhax192-justin-hughes-projects.vercel.app'
+const baseUrl = 'https://www.magiciannearme.store'
 
 function escapeXml(unsafe: string): string {
   return unsafe
