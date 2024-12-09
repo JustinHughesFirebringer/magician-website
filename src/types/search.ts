@@ -4,6 +4,7 @@ export interface SearchParams {
   query?: string;
   state?: string;
   city?: string;
+  service?: string;
   latitude?: number;
   longitude?: number;
   radius?: number;

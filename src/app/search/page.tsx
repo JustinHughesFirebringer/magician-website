@@ -41,6 +41,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               initialQuery={searchParams.query || ''} 
               initialState={searchParams.state || ''}
               initialCity={searchParams.city || ''}
+              initialService={searchParams.service || ''}
               className="max-w-xl w-full"
             />
           </div>

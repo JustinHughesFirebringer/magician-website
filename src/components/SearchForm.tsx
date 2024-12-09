@@ -11,6 +11,7 @@ interface SearchFormProps {
   initialQuery?: string;
   initialState?: string;
   initialCity?: string;
+  initialService?: string;
   className?: string;
 }
 
@@ -18,12 +19,14 @@ export default function SearchForm({
   initialQuery = '', 
   initialState = '',
   initialCity = '',
+  initialService = '',
   className = '' 
 }: SearchFormProps) {
   const router = useRouter();
   const [query, setQuery] = useState(initialQuery);
   const [state, setState] = useState(initialState);
   const [city, setCity] = useState(initialCity);
+  const [service, setService] = useState(initialService);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +39,9 @@ export default function SearchForm({
     }
     if (city) {
       searchParams.set('city', city);
+    }
+    if (service) {
+      searchParams.set('service', service);
     }
     router.push(`/search?${searchParams.toString()}`);
   };
@@ -67,6 +73,13 @@ export default function SearchForm({
           value={state}
           onChange={(e) => setState(e.target.value)}
           placeholder="State"
+          className="w-32"
+        />
+        <Input
+          type="text"
+          value={service}
+          onChange={(e) => setService(e.target.value)}
+          placeholder="Service"
           className="w-32"
         />
         <Button

@@ -145,6 +145,7 @@ export async function searchMagicians(params: SearchParams): Promise<SearchResul
       query,
       state,
       city,
+      service,
       latitude,
       longitude,
       radius = 50,
@@ -171,6 +172,10 @@ export async function searchMagicians(params: SearchParams): Promise<SearchResul
 
     if (city) {
       query_builder = query_builder.eq('magicianLocations.city', city);
+    }
+
+    if (service) {
+      query_builder = query_builder.contains('services', [service]);
     }
 
     // Calculate pagination
