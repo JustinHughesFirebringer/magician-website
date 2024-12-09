@@ -210,7 +210,7 @@ export default function MagicianPage({ params }: { params: { id: string } }) {
                       </div>
                     )}
                   </div>
-                  <Separator className="my-4" />
+                  <div className="h-px bg-border my-4" />
                 </div>
               ))}
             </CardContent>
@@ -249,7 +249,7 @@ export default function MagicianPage({ params }: { params: { id: string } }) {
                   {review.review_text && (
                     <p className="text-muted-foreground">{review.review_text}</p>
                   )}
-                  <Separator className="my-4" />
+                  <div className="h-px bg-border my-4" />
                 </div>
               ))}
             </CardContent>
