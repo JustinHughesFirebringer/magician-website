@@ -22,4 +22,5 @@ export interface SearchResults {
 
 export interface FilterData {
   locations: Array<{ state: string; city: string; magicianCount: number }>;
+  services: Array<{ service: string; count: number }>;
 }

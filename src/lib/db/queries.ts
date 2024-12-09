@@ -20,7 +20,7 @@ interface Location {
 }
 
 // Helper function to format magician data
-export async function formatMagician(data: MagicianWithRelations): Promise<Magician> {
+export function formatMagician(data: MagicianWithRelations): Magician {
   return {
     id: data.id,
     name: data.name,
@@ -112,7 +112,7 @@ export async function getLocations(): Promise<{ state: string; city: string; mag
     if (!data) return [];
 
     // Then count magicians per location in memory
-    const locationCounts = data.reduce((acc: { [key: string]: Location }, curr: { state: string; city: string; magician_id: number }) => {
+    const locationCounts = data.reduce<{ [key: string]: Location }>((acc, curr) => {
       const key = `${curr.city}, ${curr.state}`;
       if (!acc[key]) {
         acc[key] = {
@@ -127,15 +127,12 @@ export async function getLocations(): Promise<{ state: string; city: string; mag
 
     // Convert to array and sort
     return Object.values(locationCounts)
-      .map((loc: unknown) => {
-        const location = loc as Location;
-        return {
-          state: location.state,
-          city: location.city,
-          magicianCount: location.count
-        };
-      })
-      .sort((a: { magicianCount: number }, b: { magicianCount: number }) => b.magicianCount - a.magicianCount);
+      .map(location => ({
+        state: location.state,
+        city: location.city,
+        magicianCount: location.count
+      }))
+      .sort((a, b) => b.magicianCount - a.magicianCount);
   } catch (error) {
     console.error('Error fetching locations:', error);
     return [];
@@ -225,7 +222,7 @@ export async function searchMagicians(params: SearchParams): Promise<SearchResul
             magicianLocation.latitude,
             magicianLocation.longitude
           );
-          return { ...formatted, distance };
+          return { ...formatted, distance: distance as number };
         }
       }
       return formatted;
@@ -275,7 +272,7 @@ export async function getMagicianById(id: string): Promise<Magician | null> {
         )
       `)
       .eq('id', id)
-      .single();
+      .single<MagicianWithRelations>();
 
     if (error) throw error;
     if (!magician) return null;
