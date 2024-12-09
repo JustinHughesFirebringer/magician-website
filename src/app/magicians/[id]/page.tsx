@@ -1,8 +1,8 @@
 import { Star, MapPin, Calendar, Clock, DollarSign, Globe, Phone, Mail } from 'lucide-react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { getMagicianById } from '../../../../lib/db/queries';
-import { Magician } from '../../../../types/magician';
+import { getMagicianById } from '../../../lib/db/queries';
+import { Magician } from '../../../types/magician';
 
 export default async function MagicianProfile({ params }: { params: { id: string } }) {
   const magician = await getMagicianById(params.id) as Magician;

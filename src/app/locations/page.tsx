@@ -1,4 +1,4 @@
-import { getLocations } from '../../../lib/db/queries';
+import { getLocations } from '../../lib/db/queries';
 import LocationList from '../../components/LocationList';
 
 export default async function LocationsPage() {
