@@ -10,7 +10,7 @@ if (!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
 }
 
 export const createClient = () => {
-  return new createSupabaseClient<Database>(
+  return new createSupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -21,7 +21,7 @@ export const createClient = () => {
         schema: 'public'
       }
     }
-  );
+  ) as ReturnType<typeof createSupabaseClient<Database>>;
 };
 
 // Create a single supabase client for interacting with your database
