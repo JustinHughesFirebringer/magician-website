@@ -18,7 +18,7 @@ export default async function MagicianProfile({ params }: { params: { id: string
         <div className="bg-white rounded-lg shadow-md overflow-hidden mb-8">
           <div className="relative h-64 w-full">
             <Image
-              src={magician.imageUrl || '/placeholder-magician.jpg'}
+              src={magician.image_url || '/placeholder-magician.jpg'}
               alt={magician.name}
               fill
               className="object-cover"

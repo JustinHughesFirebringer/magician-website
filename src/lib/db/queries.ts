@@ -46,7 +46,8 @@ export async function formatMagician(data: MagicianWithRelations): Promise<Magic
     })),
     availability: data.magicianAvailability.map(a => a.availability),
     created_at: data.created_at,
-    updated_at: data.updated_at
+    updated_at: data.updated_at,
+    image_url: data.avatar_url || null  // Use avatar_url from database
   };
 }
 
