@@ -79,7 +79,7 @@ export async function getPopularServices(): Promise<{ service: string; count: nu
 
     // Count occurrences of each service
     const serviceCounts: { [key: string]: number } = {};
-    data.forEach(({ availability }) => {
+    data.forEach(({ availability }: { availability: string }) => {
       if (!serviceCounts[availability]) {
         serviceCounts[availability] = 0;
       }
