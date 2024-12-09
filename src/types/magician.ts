@@ -27,6 +27,11 @@ export interface Magician {
   created_at: string;
   updated_at: string;
   image_url?: string | null;
+  social_media?: {
+    facebook?: string;
+    instagram?: string;
+    youtube?: string;
+  } | null;
 }
 
 export interface MagicianWithDistance extends Magician {

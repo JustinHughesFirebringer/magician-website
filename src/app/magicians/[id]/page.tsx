@@ -28,18 +28,18 @@ export default async function MagicianProfile({ params }: { params: { id: string
             <div className="flex justify-between items-start">
               <div>
                 <h1 className="text-3xl font-bold mb-2">{magician.name}</h1>
-                {magician.businessName && (
-                  <p className="text-xl text-gray-600 mb-2">{magician.businessName}</p>
+                {magician.business_name && (
+                  <p className="text-xl text-gray-600 mb-2">{magician.business_name}</p>
                 )}
                 <div className="flex items-center gap-4 text-gray-600 mb-4">
                   <div className="flex items-center">
                     <MapPin size={18} className="mr-1" />
-                    {magician.location.city}, {magician.location.state}
+                    {magician.locations[0].city}, {magician.locations[0].state}
                   </div>
                   {magician.rating && (
                     <div className="flex items-center">
                       <Star size={18} className="mr-1 text-yellow-400 fill-current" />
-                      {magician.rating.toFixed(1)} ({magician.reviewCount} reviews)
+                      {magician.rating.toFixed(1)} ({magician.review_count} reviews)
                     </div>
                   )}
                 </div>
@@ -63,7 +63,7 @@ export default async function MagicianProfile({ params }: { params: { id: string
               
               <h3 className="text-xl font-semibold mb-3">Services</h3>
               <div className="flex flex-wrap gap-2 mb-6">
-                {magician.services.map((service: string) => (
+                {magician.availability.map((service: string) => (
                   <span
                     key={service}
                     className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full"
@@ -73,13 +73,21 @@ export default async function MagicianProfile({ params }: { params: { id: string
                 ))}
               </div>
 
-              {magician.socialMedia && Object.keys(magician.socialMedia).length > 0 && (
+              {magician.website_url && (
+                <div className="flex items-center gap-2 text-gray-600 mb-2">
+                  <Globe size={18} />
+                  <a href={magician.website_url} target="_blank" rel="noopener noreferrer" className="hover:text-blue-600">
+                    {magician.website_url}
+                  </a>
+                </div>
+              )}
+              {magician.social_media && Object.keys(magician.social_media).length > 0 && (
                 <>
                   <h3 className="text-xl font-semibold mb-3">Social Media</h3>
                   <div className="flex gap-4">
-                    {magician.socialMedia.facebook && (
+                    {magician.social_media.facebook && (
                       <a
-                        href={magician.socialMedia.facebook}
+                        href={magician.social_media.facebook}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 hover:text-blue-800"
@@ -87,9 +95,9 @@ export default async function MagicianProfile({ params }: { params: { id: string
                         Facebook
                       </a>
                     )}
-                    {magician.socialMedia.instagram && (
+                    {magician.social_media.instagram && (
                       <a
-                        href={magician.socialMedia.instagram}
+                        href={magician.social_media.instagram}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-pink-600 hover:text-pink-800"
@@ -97,9 +105,9 @@ export default async function MagicianProfile({ params }: { params: { id: string
                         Instagram
                       </a>
                     )}
-                    {magician.socialMedia.youtube && (
+                    {magician.social_media.youtube && (
                       <a
-                        href={magician.socialMedia.youtube}
+                        href={magician.social_media.youtube}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-red-600 hover:text-red-800"
@@ -120,13 +128,13 @@ export default async function MagicianProfile({ params }: { params: { id: string
               <div className="space-y-4">
                 <div className="flex items-center">
                   <MapPin className="w-5 h-5 text-gray-400 mr-3" />
-                  <span className="text-gray-700">Based in {magician.location.city}, {magician.location.state}</span>
+                  <span className="text-gray-700">Based in {magician.locations[0].city}, {magician.locations[0].state}</span>
                 </div>
-                {magician.websiteUrl && (
+                {magician.website_url && (
                   <div className="flex items-center">
                     <Globe className="w-5 h-5 text-gray-400 mr-3" />
                     <a
-                      href={magician.websiteUrl}
+                      href={magician.website_url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:text-blue-800"

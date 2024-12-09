@@ -12,7 +12,7 @@ export default function MagicianCard({ magician }: { magician: Magician }) {
         <div className="magic-glow absolute -inset-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <div className="relative h-48 w-full">
           <Image
-            src="/placeholder-magician.jpg"
+            src={magician.image_url || '/placeholder-magician.jpg'}
             alt={magician.name}
             fill
             className="object-cover"
@@ -24,7 +24,7 @@ export default function MagicianCard({ magician }: { magician: Magician }) {
           <div className="flex items-center gap-2 mb-2">
             <MapPin className="h-4 w-4 text-muted-foreground" />
             <span className="text-muted-foreground">
-              {magician.location.city}, {magician.location.state}
+              {magician.locations[0].city}, {magician.locations[0].state}
             </span>
           </div>
           {magician.rating && (
@@ -32,28 +32,28 @@ export default function MagicianCard({ magician }: { magician: Magician }) {
               <Star className="h-5 w-5 text-yellow-400 fill-current" />
               <span className="ml-1">
                 {magician.rating.toFixed(1)}
-                {magician.reviewCount && (
+                {magician.review_count && (
                   <span className="text-muted-foreground text-sm ml-1">
-                    ({magician.reviewCount} reviews)
+                    ({magician.review_count} reviews)
                   </span>
                 )}
               </span>
             </div>
           )}
           <div className="flex flex-wrap gap-2">
-            {magician.specialties.slice(0, 2).map((specialty) => (
+            {magician.availability.slice(0, 2).map((service) => (
               <div
-                key={specialty}
+                key={service}
                 className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-secondary text-secondary-foreground transition-colors group-hover:bg-primary/20 group-hover:text-primary"
               >
-                {specialty}
+                {service}
               </div>
             ))}
-            {magician.specialties.length > 2 && (
+            {magician.availability.length > 2 && (
               <div
                 className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold text-muted-foreground"
               >
-                +{magician.specialties.length - 2} more
+                +{magician.availability.length - 2} more
               </div>
             )}
           </div>

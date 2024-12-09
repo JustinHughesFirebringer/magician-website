@@ -33,7 +33,7 @@ export default function MagicianList({ magicians, currentPage, totalPages }: Mag
           >
             <div className="relative h-48">
               <Image
-                src={magician.imageUrl || '/placeholder-magician.jpg'}
+                src={magician.image_url || '/placeholder-magician.jpg'}
                 alt={magician.name}
                 fill
                 className="object-cover rounded-t-lg"
@@ -46,14 +46,14 @@ export default function MagicianList({ magicians, currentPage, totalPages }: Mag
               
               <div className="flex items-center text-sm text-gray-500 mb-2">
                 <MapPin className="w-4 h-4 mr-1" />
-                <span>{magician.location.city}, {magician.location.state}</span>
+                <span>{magician.locations[0].city}, {magician.locations[0].state}</span>
               </div>
 
-              {magician.websiteUrl && (
+              {magician.website_url && (
                 <div className="flex items-center text-sm text-gray-500 mb-2">
                   <Globe className="w-4 h-4 mr-1" />
                   <ExternalLink
-                    href={magician.websiteUrl}
+                    href={magician.website_url}
                     className="text-indigo-600 hover:text-indigo-800"
                   >
                     Visit Website
@@ -74,7 +74,7 @@ export default function MagicianList({ magicians, currentPage, totalPages }: Mag
               )}
 
               <div className="mt-2 flex flex-wrap gap-2">
-                {magician.services.map((service) => (
+                {magician.availability.map((service) => (
                   <span
                     key={service}
                     className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800"
@@ -88,7 +88,7 @@ export default function MagicianList({ magicians, currentPage, totalPages }: Mag
                 <div className="mt-3 flex items-center">
                   <Star className="w-4 h-4 text-yellow-400" />
                   <span className="text-sm text-gray-600">
-                    {magician.rating.toFixed(1)} ({magician.reviewCount} reviews)
+                    {magician.rating.toFixed(1)} ({magician.review_count} reviews)
                   </span>
                 </div>
               )}
