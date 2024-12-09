@@ -9,7 +9,7 @@ interface LocationListProps {
 
 export default function LocationList({ locations }: LocationListProps) {
   // Group locations by state
-  const locationsByState = locations.reduce((acc, location) => {
+  const locationsByState = locations.reduce((acc: Record<string, typeof locations>, location: FilterData['locations'][0]) => {
     if (!acc[location.state]) {
       acc[location.state] = [];
     }

@@ -89,9 +89,9 @@ export async function getPopularServices(): Promise<{ service: string; count: nu
 
     // Convert to array and sort by count
     return Object.entries(serviceCounts)
-      .map(([service, count]) => ({ service, count }))
-      .sort((a, b) => b.count - a.count);
-  } catch (error) {
+      .map(([service, count]: [string, number]) => ({ service, count }))
+      .sort((a: { count: number }, b: { count: number }) => b.count - a.count);
+  } catch (error: unknown) {
     console.error('Error fetching popular services:', error);
     return [];
   }
@@ -113,7 +113,7 @@ export async function getLocations(): Promise<{ state: string; city: string; mag
     if (!data) return [];
 
     // Then count magicians per location in memory
-    const locationCounts = data.reduce((acc: Record<string, Location>, curr) => {
+    const locationCounts = data.reduce((acc: Record<string, Location>, curr: Database['public']['Tables']['magician_locations']['Row']) => {
       const key = `${curr.city}, ${curr.state}`;
       if (!acc[key]) {
         acc[key] = {
@@ -128,13 +128,13 @@ export async function getLocations(): Promise<{ state: string; city: string; mag
 
     // Convert to array and sort
     return Object.values(locationCounts)
-      .map(location => ({
+      .map((location: Location) => ({
         state: location.state,
         city: location.city,
         magicianCount: location.count
       }))
-      .sort((a, b) => b.magicianCount - a.magicianCount);
-  } catch (error) {
+      .sort((a: { magicianCount: number }, b: { magicianCount: number }) => b.magicianCount - a.magicianCount);
+  } catch (error: unknown) {
     console.error('Error fetching locations:', error);
     return [];
   }
@@ -151,7 +151,7 @@ export async function getFilterData(): Promise<FilterData> {
       locations,
       services
     };
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error fetching filter data:', error);
     return {
       locations: [],
@@ -240,7 +240,7 @@ export async function searchMagicians(params: SearchParams): Promise<SearchResul
       totalPages
     };
 
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error searching magicians:', error);
     return {
       magicians: [],
@@ -279,7 +279,7 @@ export async function getMagicianById(id: string): Promise<Magician | null> {
     if (!magician) return null;
 
     return formatMagician(magician);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error fetching magician:', error);
     return null;
   }
