@@ -1,22 +1,25 @@
-import { supabase } from '../../lib/supabase';
-import { Magician } from '../../types/magician';
-import { SearchParams, SearchResults, FilterData } from '../../types/search';
-import { Database } from '../../types/database';
+import { supabase } from '../supabase/client';
+import type { Magician } from '../../types/magician';
+import type { SearchParams, SearchResults, FilterData } from '../../types/search';
+import type { Database } from '../../types/database';
 import { calculateHaversineDistance } from '../utils';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isBuildTime = process.env.NEXT_PHASE === 'phase-production-build';
 
-interface MagicianWithRelations extends Omit<Database['public']['Tables']['magicians']['Row'], 'bio'> {
+interface MagicianWithRelations {
+  id: string;
+  name: string;
+  business_name: string | null;
+  email: string | null;
+  phone: string | null;
+  website_url: string | null;
+  avatar_url: string | null;
+  bio: string | null;
+  created_at: string;
+  updated_at: string;
   magicianLocations: Database['public']['Tables']['magician_locations']['Row'][];
   magicianAvailability: Database['public']['Tables']['magician_availability']['Row'][];
-  bio?: string | null;  // This will be used as description
-}
-
-interface Location {
-  state: string;
-  city: string;
-  count: number;
 }
 
 // Helper function to format magician data

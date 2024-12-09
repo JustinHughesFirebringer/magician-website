@@ -1,19 +1,18 @@
-import { createClient as createSupabaseClient, SupabaseClient } from '@supabase/supabase-js';
+import { createClient } from '../supabase/client';
 import type { Database } from '../../types/database';
 import type { Magician } from '../../types/magician';
 
-const supabaseUrl = 'https://supabase-rose-mountain.supabase.co';
-const supabaseKey = process.env.SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+if (!supabaseUrl) {
+  throw new Error('Missing environment variable NEXT_PUBLIC_SUPABASE_URL');
+}
 
-export const supabase = createSupabaseClient(
-  supabaseUrl,
-  supabaseKey,
-  {
-    auth: {
-      persistSession: false
-    }
-  }
-) as SupabaseClient<Database>;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+if (!supabaseKey) {
+  throw new Error('Missing environment variable NEXT_PUBLIC_SUPABASE_ANON_KEY');
+}
+
+export const supabase = createClient();
 
 export async function createMagiciansTable() {
   const { error } = await supabase.rpc('create_magicians_table');
