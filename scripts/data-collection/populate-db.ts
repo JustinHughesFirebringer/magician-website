@@ -1,8 +1,8 @@
 import { readFile } from 'fs/promises';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { supabase } from '@/lib/supabase';
-import type { Database } from '@/types/database';
+import { supabase } from '../../lib/supabase';
+import type { Database } from '../../src/types/database';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
