@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { Database } from '@/types/database';
+import { Database } from '../../types/database';
 
 const supabaseUrl = 'https://supabase-rose-mountain.supabase.co';
 const supabaseKey = process.env.SUPABASE_ANON_KEY || '';

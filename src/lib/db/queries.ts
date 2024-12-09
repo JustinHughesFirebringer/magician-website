@@ -1,8 +1,8 @@
 import { supabase } from '../supabase';
-import { Magician } from '@/types/magician';
-import { SearchParams, SearchResults, FilterData } from '@/types/search';
-import { Database } from '@/types/database';
-import { calculateHaversineDistance } from '@/lib/utils';
+import { Magician } from '../../types/magician';
+import { SearchParams, SearchResults, FilterData } from '../../types/search';
+import { Database } from '../../types/database';
+import { calculateHaversineDistance } from '../utils';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isBuildTime = process.env.NEXT_PHASE === 'phase-production-build';
