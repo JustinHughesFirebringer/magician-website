@@ -70,7 +70,26 @@ export async function getPopularServices(): Promise<{ service: string; count: nu
       return [];
     }
 
-    return [];
+    const { data, error } = await supabase
+      .from('magician_availability')
+      .select('availability');
+
+    if (error) throw error;
+    if (!data) return [];
+
+    // Count occurrences of each service
+    const serviceCounts: { [key: string]: number } = {};
+    data.forEach(({ availability }) => {
+      if (!serviceCounts[availability]) {
+        serviceCounts[availability] = 0;
+      }
+      serviceCounts[availability]++;
+    });
+
+    // Convert to array and sort by count
+    return Object.entries(serviceCounts)
+      .map(([service, count]) => ({ service, count }))
+      .sort((a, b) => b.count - a.count);
   } catch (error) {
     console.error('Error fetching popular services:', error);
     return [];
@@ -125,17 +144,20 @@ export async function getLocations(): Promise<{ state: string; city: string; mag
 
 export async function getFilterData(): Promise<FilterData> {
   try {
-    const [locations] = await Promise.all([
-      getLocations()
+    const [locations, services] = await Promise.all([
+      getLocations(),
+      getPopularServices()
     ]);
 
     return {
-      locations
+      locations,
+      services
     };
   } catch (error) {
     console.error('Error fetching filter data:', error);
     return {
-      locations: []
+      locations: [],
+      services: []
     };
   }
 }
