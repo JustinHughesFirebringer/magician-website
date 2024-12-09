@@ -1,11 +1,11 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import type { Database } from '../../types/database';
 import type { Magician } from '../../types/magician';
 
 const supabaseUrl = 'https://supabase-rose-mountain.supabase.co';
 const supabaseKey = process.env.SUPABASE_ANON_KEY || '';
 
-export const supabase = createClient<Database>(
+export const supabase = createSupabaseClient(
   supabaseUrl,
   supabaseKey,
   {
@@ -13,7 +13,7 @@ export const supabase = createClient<Database>(
       persistSession: false
     }
   }
-);
+) as ReturnType<typeof createSupabaseClient<Database>>;
 
 export async function createMagiciansTable() {
   const { error } = await supabase.rpc('create_magicians_table');
